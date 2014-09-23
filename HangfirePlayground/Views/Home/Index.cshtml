@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Fire-and-forget</h2>
+        <p>
+            This is the main background job type, persistent message queues are used to handle it. Once you create a fire-and-forget job, it is being saved to its queue ("default" by default, but multiple queues supported). The queue is listened by a couple of dedicated workers that fetch a job and perform it.
+            <code>
+                BackgroundJob.Enqueue(() => Debug.WriteLine("Fire-and-forget"));
+            </code>
+        </p>
+
+        <p><a class="btn btn-default" href="@Url.Action("FireAndForget")">Execute &raquo;</a></p>
+    </div>
+    <div class="col-md-12">
+        <h2>Delayed method invocation</h2>
+        <p>
+            If you want to delay the method invocation for a certain type, call the following method. After the given delay the job will be put to its queue and invoked as a regular fire-and-forget job.
+            <code>
+                BackgroundJob.Schedule(() => Debug.WriteLine("Delayed"), TimeSpan.FromDays(1));
+            </code>
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("Delayed")">Execute &raquo;</a></p>
+    </div>
+    <div class="col-md-12">
+        <h2>Recurring tasks</h2>
+        <p>
+            To call a method on a recurrent basis (hourly, daily, etc), use the RecurringJob class. You are able to specify the schedule using CRON expressions to handle more complex scenarios.
+            <code>
+                RecurringJob.AddOrUpdate(() => Debug.Write("Recurring"), Cron.Minutely);
+            </code>
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("Recurring")">Execute &raquo;</a></p>
+    </div>
+</div>
